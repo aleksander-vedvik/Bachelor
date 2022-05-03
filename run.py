@@ -1,16 +1,23 @@
 import os
-import time
-from absl.flags import FLAGS
+import sys
+
+PATH_TO_THIS_FILE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\tools\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\tools\\deep_sort')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\tensorflowapi\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\tensorflowapi\\research\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\tensorflowapi\\research\\object_detection')
+
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
-from detection_model import Detection_Model
-from tracking_model import Tracking_Model
-from incident_evaluater import Evaluate_Incidents
-from performance_evaluater import Evaluate_Performance
+from tools.detection_model import Detection_Model
+from tools.tracking_model import Tracking_Model
+from tools.incident_evaluater import Evaluate_Incidents
+from tools.performance_evaluater import Evaluate_Performance
 import argparse
-from visualize_objects import draw_rectangle, draw_text, draw_line
-
+from tools.visualize_objects import draw_rectangle, draw_text, draw_line
 
 parser = argparse.ArgumentParser(
     description="Real-time detection")
@@ -26,13 +33,18 @@ parser.add_argument("-c",
 
 parser.add_argument("-p",
                     "--pretrained",
-                    help="Choose whether to use a pre-trained model or not. 1 = True, 0 = False (0 is default)",
+                    help="Choose whether to use a pre-trained model or not. 1 = True, 0 = False (0 is default).",
                     type=str)
                 
 parser.add_argument("-s",
                     "--skip_frames",
-                    help="Choose how many frames should be skipped",
+                    help="Choose how many frames should be skipped.",
                     type=int)
+
+parser.add_argument("-r",
+                    "--resize",
+                    help="Define a scale factor to resize the input image.",
+                    type=float)
 
 parser.add_argument("-t",
                     "--tracking",
@@ -53,49 +65,36 @@ args = parser.parse_args()
 
 
 def main():
-    #image_dir1 = r'F:\\Bachelor\\DATA\\Incidents\\Video2\\images\\'
-    #anno_path1 = r'F:\\Bachelor\\DATA\\Incidents\\Video2\\annotations.json'
-    #datasets = [{"dataset": "self_annotated1", "images": image_dir1, "annotations": anno_path1}]
-
     datasets = []
-    org_path = r'F:\\Bachelor\\DATA\\Incidents\\Video'
-    exclude = [4, 8]
-    for i in range(1, 15):
-        if i in exclude:
-            continue
+    org_path = r'.\\data\\Incidents\\Video'
+    for i in range(1, 13):
         image_dir1 = org_path + str(i) + "\\images\\"
         anno_path1 = org_path + str(i) + "\\annotations.json"
         dataset_name = "self_annotated" + str(i)
         datasets.append({"dataset": dataset_name, "images": image_dir1, "annotations": anno_path1})
     
-    video_path = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Video footage\\Test\\Tunnel_opening_night_time_long.mp4'
     #video_path = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Video footage\\Incidents_4.mp4'
-    path_to_this_file = os.path.dirname(os.path.abspath(__file__))
-    model_filename = os.path.join(path_to_this_file, 'model_data/mars-small128.pb')
-    #model_filename = os.path.join(path_to_this_file, 'model_data/model640.pt')
+    PATH_TO_THIS_FILE = os.path.dirname(os.path.abspath(__file__))
+    model_filename = os.path.join(PATH_TO_THIS_FILE, 'tools/model_data/mars-small128.pb')
     
     paths = {
-        "CHECKPOINT_PATH": "../../Detection/TensorFlowAPI/models/ssd_mobnet/",
-        "PIPELINE_CONFIG": "../../Detection/TensorFlowAPI/models/ssd_mobnet/pipeline.config", 
-        "LABELMAP": "../../Detection/TensorFlowAPI/annotations/label_map.pbtxt",
-        "VIDEO_PATH": video_path,
+        "CHECKPOINT_PATH": "./training/models/ssd_mobnet/",
+        "PIPELINE_CONFIG": "./training/models/ssd_mobnet/pipeline.config", 
+        "LABELMAP": "./training/annotations/label_map.pbtxt",
         "DEEPSORT_MODEL": model_filename
     }
     
-    image_enhancement_methods = ["gray_linear", "gray_nonlinear", "he", "retinex_ssr", "retinex_msr", "bgs", "mask"]
+    image_enhancement_methods = ["gray_linear", "gray_nonlinear", "he", "retinex_ssr", "retinex_msr", "mask"]
     models = ["ssd_mobnet", "ssd_resnet", "faster_rcnn", "mask_rcnn", "yolov5", "efficientdet"]
     classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
-
-    video = paths["VIDEO_PATH"]
-
+    
     model_name = "yolov5"
-    tracking_model_name = "DeepSort"
-
     if args.model in models:
-        paths["CHECKPOINT_PATH"] = "../../Detection/TensorFlowAPI/models/" + args.model + "/"
-        paths["PIPELINE_CONFIG"] = "../../Detection/TensorFlowAPI/models/" + args.model + "/pipeline.config"
+        paths["CHECKPOINT_PATH"] = "./training/models/" + args.model + "/"
+        paths["PIPELINE_CONFIG"] = "./training/models/" + args.model + "/pipeline.config"
         model_name = args.model
 
+    tracking_model_name = "DeepSort"
     if args.tracking:
         tracking_model_name = args.tracking
 
@@ -112,9 +111,9 @@ def main():
         image_enhancement = args.img_enh
     
     if args.pretrained == "1":
-        paths["CHECKPOINT_PATH"] = "../../Detection/TensorFlowAPI/pre-trained-models/" + args.model + "/checkpoint/"
-        paths["PIPELINE_CONFIG"] = "../../Detection/TensorFlowAPI/pre-trained-models/" + args.model + "/pipeline.config"
-        paths["LABELMAP"] = "../../Detection/TensorFlowAPI/annotations/mscoco_label_map.pbtxt"
+        paths["CHECKPOINT_PATH"] = "./training/pre-trained-models/" + args.model + "/checkpoint/"
+        paths["PIPELINE_CONFIG"] = "./training/pre-trained-models/" + args.model + "/pipeline.config"
+        paths["LABELMAP"] = "./training/annotations/mscoco_label_map.pbtxt"
         model_name = "Pretrained"
         ckpt_number = "0"
         classes = {"car": "3", "truck": "8", "bus": "6", "bike": "2", "person": "1", "motorbike": "4"}
@@ -122,6 +121,10 @@ def main():
     skip_frames = 1
     if args.skip_frames:
         skip_frames = int(args.skip_frames)
+    
+    resize = 1
+    if args.resize:
+        resize = float(args.resize)
 
     model = Detection_Model(model_name, classes, paths, ckpt_number)
     tracker_model = Tracking_Model(paths["DEEPSORT_MODEL"], tracker_type=tracking_model_name)
@@ -129,70 +132,21 @@ def main():
 
     frame_number = 0
 
-    #bgs = cv2.createBackgroundSubtractorMOG2(detectShadows=False)
-    #bgs = cv2.createBackgroundSubtractorKNN()
-    #mask = cv2.imread("mask.jpg",0)
-    
-    #path = [{"video": video}]
-    #pe = Evaluate_Performance("Video", path, classes, model, tracker_model)
     pe = Evaluate_Performance("Images", datasets, classes, model, tracker_model)
 
     while True:
-        ret, frame, new_video, mask = pe.read()
-        #print(f"Frame: {frame_number}")
+        ret, frame, new_video, mask = pe.read(resize)
         frame_number +=1
         if frame_number % skip_frames != 0:
             continue
-        #bgs_mask = bgs.apply(frame)
-        
-        #bgs_mask = cv2.blur(frame,(3,3))
-        
-        #frame = cv2.bitwise_and(frame, frame, mask=mask)
-        
-        #bgs_mask = cv2.bitwise_and(frame, frame, mask=bgs_mask)
-        #frame = cv2.bitwise_and(frame, frame, mask=bgs_mask)
-        #org_frame = frame
 
         if ret:
             frame = pe.image_enhancement(frame, image_enhancement, mask)
-            """
-            if image_enhancement == "gray_linear":
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2RGB)
-            elif image_enhancement == "gray_nonlinear":
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            elif image_enhancement == "he":
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                frame = cv2.equalizeHist(frame)
-                frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2RGB)
-            elif image_enhancement == "retinex_ssr":
-                variance=200
-                img_ssr=SSR(frame, variance)
-                frame = cv2.cvtColor(img_ssr, cv2.COLOR_BGR2RGB)
-            elif image_enhancement == "retinex_msr":
-                variance_list=[100, 100, 100]
-                img_msr=MSR(frame, variance_list)
-                frame = cv2.cvtColor(img_msr, cv2.COLOR_BGR2RGB)
-            elif image_enhancement == "bgs":
-                bgs = cv2.createBackgroundSubtractorMOG2(detectShadows=False)
-                #bgs = cv2.createBackgroundSubtractorKNN()
-                bgs_mask = bgs.apply(frame)
-                frame = cv2.bitwise_and(frame, frame, mask=bgs_mask)
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            elif image_enhancement == "mask":
-                frame = cv2.bitwise_and(frame, frame, mask=mask)
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            else:
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            """
         else:
             print('Video has ended!')
             break
-        #start_time = time.time()
 
         if new_video:
-            print("NEW VIDEO")
-            #raise ValueError
             new_tracking_model = Tracking_Model(paths["DEEPSORT_MODEL"], tracker_type=tracking_model_name)
             pe.tracking_model = new_tracking_model
 
@@ -200,7 +154,6 @@ def main():
 
         evaluater.purge(frame_number)
 
-        #for track in tracker_model.get_tracks():
         for track in pe.get_tracks():
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue 
@@ -215,31 +168,12 @@ def main():
                 draw_line(frame, current_point, next_point)
             
             
-        # calculate frames per second of running detections
         pe.status()
-        
-        
-        #fps = 1.0 / (time.time() - start_time)
-        #detection_time = (detection_time - start_time) * 1000
-        #fps = round(fps, 1)
-        #detection_time = int(detection_time)
-        #track_time = int(track_time * 1000)
-        #print(f"FPS: {fps}")
-        #print(f"Detection time: {detection_time} ms")
-        #print(f"Tracking time: {track_time} ms\n")
-        #print("FPS: %.2f" % fps)
-        #print("Detection time: %.2f s" % detection_time)
-        #print("Tracking time: %.2f s\n" % track_time)
         
         result = np.asarray(frame)
         result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         cv2.imshow("Output Video", result)
 
-        #saved_image = "F:/Bachelor/Pictures/Yolov5_deepsort/" + str(frame_number) + ".jpg"
-        #cv2.imwrite(saved_image, result)
-        
-        #cv2.imshow("Background subtraction", bgs_mask)
-        
         if cv2.waitKey(1) & 0xFF == ord('q'): 
             break
     cv2.destroyAllWindows()

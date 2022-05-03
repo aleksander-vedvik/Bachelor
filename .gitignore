@@ -1,3 +1,29 @@
+# Dataset folder
+data/
+data/*
+
+# Trained models
+training/models/efficientdet/train
+training/models/efficientdet/checkpoint
+training/models/efficientdet/*.index
+training/models/efficientdet/*.data-00000-of-00001
+training/models/faster_rcnn/train
+training/models/faster_rcnn/checkpoint
+training/models/faster_rcnn/*.index
+training/models/faster_rcnn/*.data-00000-of-00001
+training/models/ssd_mobnet/train
+training/models/ssd_mobnet/checkpoint
+training/models/ssd_mobnet/*.index
+training/models/ssd_mobnet/ckpt-*
+
+
+# TensorFlowAPI
+training/tensorflowapi/
+
+# YOLOv5
+training/yolov5/
+*.pt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

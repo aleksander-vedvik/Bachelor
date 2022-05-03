@@ -465,7 +465,7 @@ class Evaluate_Performance:
         try:
             total_detections = self.total_number_of_valid_detections + self.false_positives_detections
             text += f"Scale: {int(self.scale*100)} %\n"
-            text += f"Resolution: {int(self.height*self.scale)}x{int(self.width*self.scale)} px\n"
+            text += f"Resolution: {int(self.width*self.scale)}x{int(self.height*self.scale)} px\n"
             text += f"Mean image enhancement time: {int(1000 * self.mean_image_enhancement_time / self.number_of_frames)} ms\n"
             text += "\n"
             text += f"Mean detection time: \t{int(1000 * self.mean_detection_time / self.number_of_frames)} ms\n"

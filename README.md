@@ -6,7 +6,12 @@ ROOT or . is defined as the same folder where this readme file is located.
 
 # Installation
 
-## Prerequisite
+## Prerequisites
+
+- [Python 3.8](https://www.python.org/)
+- [TensorFlow 2.0](https://www.tensorflow.org/)
+- [Nvidia toolkit](https://developer.nvidia.com/cuda-toolkit)
+
 Install dependencies:
 
     pip install requirements.txt
@@ -34,8 +39,8 @@ Follow the installation steps provided [here](https://github.com/ultralytics/yol
 
 ## Datasets
 
-1. Download the datasets from here.
-2. Unzip the datasets into the folder "./data/"
+1. Download the datasets from [here](https://drive.google.com/drive/folders/1hNMBL2MNyz5dWZdi1BR1o1X-3yypdCkJ?usp=sharing).
+2. Move the datasets into the folder "./data/"
 
 ## TensorFlowAPI:
 
@@ -86,21 +91,9 @@ The different models used are:
 
 # Tensorboard
 
-You can use Tensorboard to get info regarding
+You can use Tensorboard to get info regarding the fine-tuned models. Navigate to the model folders and run:
 
-### train
-cd ../train
-cd Tensorflow/workspace/models/ssd_mobnet/train
-tensorboard --logdir=.
-
-### test
-cd ../eval
-cd Tensorflow/workspace/models/ssd_mobnet/eval
-tensorboard --logdir=.
-
-cd Models/workspace/Detection/TensorFlowAPI/models/ssd_mobnet/eval
-cd Models/workspace/Detection/TensorFlowAPI/models/efficientdet/eval
-cd Models/workspace/Detection/TensorFlowAPI/models/faster_rcnn/eval
+    tensorboard --logdir=.
 
 
 # Test the models on the test dataset:
@@ -120,5 +113,9 @@ Description of flags:
 # References:
 
 - https://github.com/tensorflow/models
-
 - https://github.com/nicknochnack/TFODCourse
+- https://github.com/aravindskrishnan/Retinex-Image-Enhancement
+- https://github.com/theAIGuysCode/yolov4-deepsort
+- https://github.com/nwojke/deep_sort
+- https://github.com/BerntA/CVEET
+- https://www.youtube.com/watch?v=IOxxEJpXZGU&ab_channel=RedDFilm

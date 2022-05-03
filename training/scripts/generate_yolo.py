@@ -36,10 +36,25 @@ def create_txt_file(entry, output_annotations, output_images):
     
 
 def main():
-    image_dir = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\images\\'
-    anno_path = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\annotations.json'
+    image_dir_night = r'..\\..\\data\\Training\\raw_night\\'
+    anno_path_night = r'..\\..\\data\\Training\\raw_night\\'
     
-    datasets = [ {"dataset": "self_annotated", "images": image_dir, "annotations": anno_path}]
+    image_dir_raw = r'..\\..\\data\\Training\\raw\\'
+    anno_path_raw = r'..\\..\\data\\Training\\raw\\'
+    
+    image_dir_kitti = r'..\\..\\data\\Training\\kitti\\'
+    anno_path_kitti = r'..\\..\\data\\Training\\kitti\\'
+
+    datasets = [ {"dataset": "other1", "images": image_dir_night, "annotations": anno_path_night},
+                 {"dataset": "other2", "images": image_dir_raw, "annotations": anno_path_raw},
+                 {"dataset": "other3", "images": image_dir_kitti, "annotations": anno_path_kitti}]
+
+    org_path = r'..\\..\\data\\Incidents\\Video'
+    for i in range(1, 13):
+        image_dir1 = org_path + str(i) + "\\images\\"
+        anno_path1 = org_path + str(i) + "\\annotations.json"
+        dataset_name = "self_annotated" + str(i)
+        datasets.append({"dataset": dataset_name, "images": image_dir1, "annotations": anno_path1})
 
     train_test_distribution = 0.9
     classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
@@ -47,7 +62,7 @@ def main():
     preparer = Prepare(train_test_distribution, datasets, classes)
     preparer.stats_dataset("self_annotated")
     
-    output_path = "./YOLO/vehicles/"
+    output_path = "../yolov5/dataset/"
 
     for entry in preparer.get_all_train_entries():
         output_annotations = output_path + "labels/train/"

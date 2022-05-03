@@ -47,8 +47,8 @@ class Evaluate_Performance:
 
         self.missed_detections = 0
         self.total_number_of_real_detections = 0
-        self.total_number_of_detections = 0
-        self.total_number_of_detections_adjusted = 0
+        self.total_number_of_valid_detections = 0
+        self.total_number_of_valid_detections_adjusted = 0
         self.false_positives_detections = 0 
         self.false_positives_detections_previous = 0 
 
@@ -272,22 +272,10 @@ class Evaluate_Performance:
             frame = cv2.equalizeHist(frame)
             frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2RGB)
         elif image_enhancement == "retinex_ssr":
-            #self.scale = 0.5
-            #self.width = int(self.width * self.scale)
-            #self.height = int(self.height * self.scale)
-            #dim = (self.width, self.height)
-            #frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
-
             variance=300
             img_ssr=SSR(frame, variance)
             frame = cv2.cvtColor(img_ssr, cv2.COLOR_BGR2RGB)
         elif image_enhancement == "retinex_msr":
-            #self.scale = 0.5
-            #width = int(self.width * self.scale)
-            #height = int(self.height * self.scale)
-            #dim = (width, height)
-            #frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
-
             variance_list=[200, 200, 200]
             img_msr=MSR(frame, variance_list)
             frame = cv2.cvtColor(img_msr, cv2.COLOR_BGR2RGB)
@@ -447,8 +435,8 @@ class Evaluate_Performance:
 
         self.detection_accuracy += avg_score
         self.detection_accuracy_adjusted += avg_score_adjusted
-        self.total_number_of_detections += len(self.detected_objects)
-        self.total_number_of_detections_adjusted += number_of_detections_adjusted
+        self.total_number_of_valid_detections += len(self.detected_objects)
+        self.total_number_of_valid_detections_adjusted += number_of_detections_adjusted
         if len(self.detected_objects): avg_score /= len(self.detected_objects)
         if number_of_detections_adjusted > 0: avg_score_adjusted /= number_of_detections_adjusted
         print(f"Average score: {round(avg_score*100, 2)} %")
@@ -475,7 +463,7 @@ class Evaluate_Performance:
     def summary(self):
         text = "\n"
         try:
-            total_tracks = self.total_number_of_detections + self.false_positives_detections
+            total_detections = self.total_number_of_valid_detections + self.false_positives_detections
             text += f"Scale: {int(self.scale*100)} %\n"
             text += f"Resolution: {int(self.height*self.scale)}x{int(self.width*self.scale)} px\n"
             text += f"Mean image enhancement time: {int(1000 * self.mean_image_enhancement_time / self.number_of_frames)} ms\n"
@@ -496,23 +484,21 @@ class Evaluate_Performance:
             text += f"Min fps: \t{int(self.min_fps)}\n"
             text += f"Max fps: \t{int(self.max_fps)}\n"
             text += "\n"
-            #text += f"False positive detections: \t{round(100*self.false_positives_detections/self.total_number_of_detections, 1)} %\n"
-            text += f"False positive detections: \t{round(100*self.false_positives_detections/total_tracks, 1)} %\n"
+            text += f"False positive detections: \t{round(100*self.false_positives_detections/total_detections, 1)} %\n"
             text += f"Missed detections: \t\t\t{round(100*self.missed_detections/self.total_number_of_real_detections, 1)} %\n"
             text += "\n"
-            text += f"Detection accuracy: \t\t\t{round(100*self.detection_accuracy/self.total_number_of_detections, 1)} %\n"
-            text += f"Detection accuracy adjusted: \t{round(100*self.detection_accuracy_adjusted/self.total_number_of_detections_adjusted, 1)} %\n"
+            text += f"Detection accuracy: \t\t\t{round(100*self.detection_accuracy/self.total_number_of_valid_detections, 1)} %\n"
+            text += f"Detection accuracy adjusted: \t{round(100*self.detection_accuracy_adjusted/self.total_number_of_valid_detections_adjusted, 1)} %\n"
             text += f"Tracking accuracy: \t\t\t\t{round(100*self.tracking_accuracy/(self.tracking_accuracy+self.tracking_id_switches+self.tracking_id_duplicates), 1)} %\n"
             text += f"Tracking ID duplicates: \t\t{round(100*self.tracking_id_duplicates/(self.tracking_accuracy+self.tracking_id_switches+self.tracking_id_duplicates), 1)} %\n"
             text += f"Tracking ID switches: \t\t\t{round(100*self.tracking_id_switches/(self.tracking_accuracy+self.tracking_id_switches+self.tracking_id_duplicates), 1)} %\n"
             text += "\n"
             text += f"Incident accuracy: \t{round(100*self.incident_accuracy/(self.incident_accuracy+self.missed_incidents), 1)} %\n"
             text += f"Missed incidents: \t{round(100*self.missed_incidents/(self.incident_accuracy+self.missed_incidents), 1)} %\n"
-            #text += f"False alarms: \t\t{round(100*self.false_alarms/self.total_number_of_detections, 1)} %\n"
-            text += f"False alarms: \t\t{round(100*self.false_alarms/total_tracks, 1)} %\n"
+            text += f"False alarms: \t\t{round(100*self.false_alarms/total_detections, 1)} %\n"
             text += "\n"
-            text += f"Total number of detections: {self.total_number_of_detections}\n"
-            text += f"Total tracks: {total_tracks}\n"
+            text += f"Total number of valid detections: {self.total_number_of_valid_detections}\n"
+            text += f"Total number of detections: {total_detections}\n"
             
         except Exception as e:
             print(e)

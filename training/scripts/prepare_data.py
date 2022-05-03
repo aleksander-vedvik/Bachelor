@@ -290,45 +290,35 @@ class Prepare:
                     print(f"Test Entry: {test_entry}")
 
 def main():
-    image_dir_other = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\dark\\'
-    anno_path_other = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\dark\\'
-
-    image_dir_night = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw_night\\'
-    anno_path_night = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw_night\\'
+    image_dir_night = r'..\\..\\data\\Training\\raw_night\\'
+    anno_path_night = r'..\\..\\data\\Training\\raw_night\\'
     
-    image_dir_raw = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw\\'
-    anno_path_raw = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw\\'
+    image_dir_raw = r'..\\..\\data\\Training\\raw\\'
+    anno_path_raw = r'..\\..\\data\\Training\\raw\\'
     
-    image_dir_kitti = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\kitti\\'
-    anno_path_kitti = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\kitti\\'
+    image_dir_kitti = r'..\\..\\data\\Training\\kitti\\'
+    anno_path_kitti = r'..\\..\\data\\Training\\kitti\\'
 
-    image_dir = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\images\\'
-    anno_path = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\annotations.json'
-    
-    datasets = [ {"dataset": "self_annotated", "images": image_dir, "annotations": anno_path},
-                 {"dataset": "other1", "images": image_dir_other, "annotations": anno_path_other},
-                 {"dataset": "other2", "images": image_dir_night, "annotations": anno_path_night},
-                 {"dataset": "other3", "images": image_dir_raw, "annotations": anno_path_raw},
-                 {"dataset": "other4", "images": image_dir_kitti, "annotations": anno_path_kitti}]
+    datasets = [ {"dataset": "other1", "images": image_dir_night, "annotations": anno_path_night},
+                 {"dataset": "other2", "images": image_dir_raw, "annotations": anno_path_raw},
+                 {"dataset": "other3", "images": image_dir_kitti, "annotations": anno_path_kitti}]
 
-    train_test_distribution = 0.9
-    classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
-
-    org_path = r'F:\\Bachelor\\DATA\\Incidents\\Video'
-    for i in range(1, 15):
+    org_path = r'..\\..\\data\\Incidents\\Video'
+    for i in range(1, 13):
         image_dir1 = org_path + str(i) + "\\images\\"
         anno_path1 = org_path + str(i) + "\\annotations.json"
         dataset_name = "self_annotated" + str(i)
         datasets.append({"dataset": dataset_name, "images": image_dir1, "annotations": anno_path1})
     
+    train_test_distribution = 0.9
+    classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
+    
     preparer = Prepare(train_test_distribution, datasets, classes)
-    preparer.stats_dataset("other")
     preparer.stats_dataset("other1")
     preparer.stats_dataset("other2")
     preparer.stats_dataset("other3")
-    preparer.stats_dataset("other4")
     preparer.stats_dataset("self_annotated")
-    for i in range(1, 15):
+    for i in range(1, 13):
         name = "self_annotated" + str(i)
         preparer.stats_dataset(name)
 

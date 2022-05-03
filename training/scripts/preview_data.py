@@ -12,8 +12,12 @@ def draw_rectangle(image, object, img_ratio):
     cv2.rectangle(image, start_point, end_point, color_rectangle, thickness_rectangle)
 
 def draw_text(image, detected_object, img_ratio):
-    text = "Class: " + str(detected_object["class"]) + ", ID: " + detected_object["info"]["ID"]
-    coordinates = (int(float(detected_object["x2"])*img_ratio), int(float(detected_object["y2"])*img_ratio))
+    try:
+        text = "Class: " + str(detected_object["class"]) + ", ID: " + detected_object["info"]["ID"]
+    except Exception as e:
+        print(e)
+        text = str(detected_object["class"])
+    coordinates = (int(float(detected_object["x1"])*img_ratio), int(float(detected_object["y2"])*img_ratio))
     font = cv2.FONT_HERSHEY_SIMPLEX
     fontScale = 1
     color_text = (255, 255, 255)
@@ -27,7 +31,7 @@ def visualize_objects(image, example):
         x2 = float(obj['x2'])
         y1 = float(obj['y1'])
         y2 = float(obj['y2'])
-        detected_object = {"x1": x1, "y1": y1, "x2": x2, "y2": y2, "class": obj["class"], "info": obj["info"]}
+        detected_object = {"x1": x1, "y1": y1, "x2": x2, "y2": y2, "class": obj["class"], "info": obj.get("info")}
         
         draw_rectangle(image, detected_object, 1)
         draw_text(image, detected_object, 1)
@@ -40,28 +44,21 @@ def gamma(image, gamma=2.0):
     return cv2.LUT(image, table)
 
 def main():
-    image_dir_other = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\dark\\'
-    anno_path_other = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\dark\\'
+    image_dir_night = r'..\\..\\data\\Training\\raw_night\\'
+    anno_path_night = r'..\\..\\data\\Training\\raw_night\\'
+    
+    image_dir_raw = r'..\\..\\data\\Training\\raw\\'
+    anno_path_raw = r'..\\..\\data\\Training\\raw\\'
+    
+    image_dir_kitti = r'..\\..\\data\\Training\\kitti\\'
+    anno_path_kitti = r'..\\..\\data\\Training\\kitti\\'
 
-    image_dir_night = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw_night\\'
-    anno_path_night = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw_night\\'
-    
-    image_dir_raw = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw\\'
-    anno_path_raw = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw\\'
-    
-    image_dir_kitti = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\kitti\\'
-    anno_path_kitti = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\kitti\\'
+    datasets = [ {"dataset": "other1", "images": image_dir_night, "annotations": anno_path_night},
+                 {"dataset": "other2", "images": image_dir_raw, "annotations": anno_path_raw},
+                 {"dataset": "other3", "images": image_dir_kitti, "annotations": anno_path_kitti}]
 
-    image_dir = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\images\\'
-    anno_path = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\annotations.json'
-    
-    image_dir1 = r'F:\\Bachelor\\DATA\\Incidents\\Video11\\images\\'
-    anno_path1 = r'F:\\Bachelor\\DATA\\Incidents\\Video11\\annotations.json'
-
-    datasets = [ ]
-    
-    org_path = r'F:\\Bachelor\\DATA\\Incidents\\Video'
-    for i in range(1, 15):
+    org_path = r'..\\..\\data\\Incidents\\Video'
+    for i in range(1, 13):
         image_dir1 = org_path + str(i) + "\\images\\"
         anno_path1 = org_path + str(i) + "\\annotations.json"
         dataset_name = "self_annotated" + str(i)
@@ -80,8 +77,8 @@ def main():
     frame = 0
     for example in preparer.get_all_train_entries():
         frame += 1
-        if frame < 100:
-            continue
+        #if frame < 100:
+        #    continue
         #if file != example["filename"]:
         #    continue
         path = example["images_path"]
@@ -94,8 +91,8 @@ def main():
         #variance=300
         variance=500
 
-        mask_path = "./output/3/mask.png"
-        mask = cv2.imread(mask_path, 0)
+        #mask_path = "./output/3/mask.png"
+        #mask = cv2.imread(mask_path, 0)
 
         #msr=MSR(image,variance_list)
         #ssr=SSR(image, variance)
@@ -109,17 +106,17 @@ def main():
         #gimp = retinex_gimp(image)
         #fm = retinex_FM(image)
         #msr = retinex_FM(image)
-        gl = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        he = cv2.equalizeHist(gl)
-        nl2 = gamma(image, 2.0)
-        masked_image = cv2.bitwise_and(image, image, mask=mask)
+        #gl = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        #he = cv2.equalizeHist(gl)
+        #nl2 = gamma(image, 2.0)
+        #masked_image = cv2.bitwise_and(image, image, mask=mask)
 
         #nl1_5 = gamma(image, 1.5)
         
         #visualize_objects(image, example)
         #visualize_objects(img_msr, example)
         
-        #visualize_objects(image, example)
+        visualize_objects(image, example)
         #visualize_objects(src, example)
         #visualize_objects(dst, example)
 

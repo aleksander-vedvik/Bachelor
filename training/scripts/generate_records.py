@@ -3,13 +3,11 @@ import io
 import sys
 
 PATH_TO_THIS_FILE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, PATH_TO_THIS_FILE + '\\tools\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '\\tools\\deep_sort')
 sys.path.insert(0, PATH_TO_THIS_FILE + '\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\tensorflowapi\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\tensorflowapi\\research\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '\\training\\tensorflowapi\\research\\object_detection')
+sys.path.insert(0, PATH_TO_THIS_FILE + '..\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '..\\tensorflowapi\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '..\\tensorflowapi\\research\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '..\\tensorflowapi\\research\\object_detection')
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow.compat.v1 as tf
@@ -61,29 +59,21 @@ def create_tf_example(example):
 
 
 def main(_):
-    image_dir_other = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\dark\\'
-    anno_path_other = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\dark\\'
-
-    image_dir_night = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw_night\\'
-    anno_path_night = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw_night\\'
+    image_dir_night = r'..\\..\\data\\Training\\raw_night\\'
+    anno_path_night = r'..\\..\\data\\Training\\raw_night\\'
     
-    image_dir_raw = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw\\'
-    anno_path_raw = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\raw\\'
+    image_dir_raw = r'..\\..\\data\\Training\\raw\\'
+    anno_path_raw = r'..\\..\\data\\Training\\raw\\'
     
-    image_dir_kitti = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\kitti\\'
-    anno_path_kitti = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\DATA MASTER\\cveet-data\\kitti\\'
+    image_dir_kitti = r'..\\..\\data\\Training\\kitti\\'
+    anno_path_kitti = r'..\\..\\data\\Training\\kitti\\'
 
-    image_dir = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\images\\'
-    anno_path = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Superannotate\\Test\\Test\\annotations.json'
+    datasets = [ {"dataset": "other1", "images": image_dir_night, "annotations": anno_path_night},
+                 {"dataset": "other2", "images": image_dir_raw, "annotations": anno_path_raw},
+                 {"dataset": "other3", "images": image_dir_kitti, "annotations": anno_path_kitti}]
 
-    datasets = [ {"dataset": "self_annotated", "images": image_dir, "annotations": anno_path},
-                 #{"dataset": "other1", "images": image_dir_other, "annotations": anno_path_other},
-                 {"dataset": "other2", "images": image_dir_night, "annotations": anno_path_night},
-                 {"dataset": "other3", "images": image_dir_raw, "annotations": anno_path_raw},
-                 {"dataset": "other4", "images": image_dir_kitti, "annotations": anno_path_kitti}]
-
-    org_path = r'F:\\Bachelor\\DATA\\Incidents\\Video'
-    for i in range(1, 15):
+    org_path = r'..\\..\\data\\Incidents\\Video'
+    for i in range(1, 13):
         image_dir1 = org_path + str(i) + "\\images\\"
         anno_path1 = org_path + str(i) + "\\annotations.json"
         dataset_name = "self_annotated" + str(i)
@@ -94,7 +84,7 @@ def main(_):
     
     preparer = Prepare(train_test_distribution, datasets, classes)
     
-    output_path = "../../workspace/Detection/TensorFlowAPI/annotations/"
+    output_path = "../annotations/"
 
     train_output = output_path + "train.record"    
     writer = tf.python_io.TFRecordWriter(train_output)

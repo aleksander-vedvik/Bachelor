@@ -60,7 +60,6 @@ def main():
     classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
     
     preparer = Prepare(train_test_distribution, datasets, classes)
-    preparer.stats_dataset("self_annotated")
     
     output_path = "../yolov5/dataset/"
 

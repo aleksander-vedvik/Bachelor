@@ -1,22 +1,33 @@
 # Bachelor
- 
+I will provide a quick guide below on how to get started with this repository.
 
 
+# Installation
+
+## TensorFlowAPI
+1. Download protoc and add to PATH:
+    - Download [Protoc](https://github.com/protocolbuffers/protobuf/releases/download/v3.15.6/protoc-3.15.6-win64.zip).
+
+    - Add protoc to PATH: "*_PATH TO DIRECTORY_*\protoc\protoc-3.15.6-win64\bin"
+
+2. Clone [this repository](https://github.com/tensorflow/models) into the "./training/tensorflowapi" folder.
+
+3. Install dependencies:
+   
+        cd ./training/tensorflowapi/research/slim && pip install -e .
+
+4. Download pre-trained models [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md) and put them in the "./training/pre-trained-models" folder.
 
 
+## YOLOv5
+Follow the installation steps provided [here](https://github.com/ultralytics/yolov5) by Ultralytics. Clone the repository into the ".training/yolov5" folder.
 
 
-Download [Protoc](https://github.com/protocolbuffers/protobuf/releases/download/v3.15.6/protoc-3.15.6-win64.zip).
-
-Add protoc to PATH: "C:\Users\Aleks\Documents\Bachelor\Models\Tensorflow\protoc\protoc-3.15.6-win64\bin"
-
-Install dependencies:
-cd Tensorflow/models/research/slim && pip install -e .
+# Prepare the data
 
 
-
-# Generate records from .txt files. Works on exlusive dark image dataset
-python Tensorflow/other/generate_records.py
+# Generate records from .txt files.
+    python Tensorflow/other/generate_records.py
 
 cd C:/Users/Aleks/Documents/Bachelor/Workspace/Models/scripts/training
 python generate_records.py
@@ -95,3 +106,11 @@ python ./yolov5/train.py --img 1920 --batch 4 --epoch 30 --data ./dataset.yaml -
 ### OBJECT TRACKING
 cd C:/Users/Aleks/Documents/Bachelor/Workspace/Models/workspace/Tracking/DeepSort
 python object_tracking.py -m *model* -c *checkpoint*
+
+
+
+# References:
+
+- https://github.com/tensorflow/models
+
+- https://github.com/nicknochnack/TFODCourse

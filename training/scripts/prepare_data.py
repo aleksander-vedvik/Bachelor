@@ -322,6 +322,8 @@ def main():
         name = "self_annotated" + str(i)
         preparer.stats_dataset(name)
 
-
+    preparer.get_all_train_entries()
+    preparer.get_all_test_entries()
+    
 if __name__ == '__main__':
     main()

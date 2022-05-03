@@ -73,8 +73,6 @@ def main():
         dataset_name = "self_annotated" + str(i)
         datasets.append({"dataset": dataset_name, "images": image_dir1, "annotations": anno_path1})
     
-    #video_path = r'C:\\Users\\Aleks\\Documents\\Bachelor\\Datasets\\Video footage\\Incidents_4.mp4'
-    PATH_TO_THIS_FILE = os.path.dirname(os.path.abspath(__file__))
     model_filename = os.path.join(PATH_TO_THIS_FILE, 'tools/model_data/mars-small128.pb')
     
     paths = {
@@ -85,7 +83,7 @@ def main():
     }
     
     image_enhancement_methods = ["gray_linear", "gray_nonlinear", "he", "retinex_ssr", "retinex_msr", "mask"]
-    models = ["ssd_mobnet", "ssd_resnet", "faster_rcnn", "mask_rcnn", "yolov5", "efficientdet"]
+    models = ["ssd_mobnet", "faster_rcnn", "yolov5", "efficientdet"]
     classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
     
     model_name = "yolov5"
@@ -129,11 +127,9 @@ def main():
     model = Detection_Model(model_name, classes, paths, ckpt_number)
     tracker_model = Tracking_Model(paths["DEEPSORT_MODEL"], tracker_type=tracking_model_name)
     evaluater = Evaluate_Incidents(classes)
-
-    frame_number = 0
-
     pe = Evaluate_Performance("Images", datasets, classes, model, tracker_model)
 
+    frame_number = 0
     while True:
         ret, frame, new_video, mask = pe.read(resize)
         frame_number +=1
@@ -181,7 +177,7 @@ def main():
     summary = pe.summary()
     print(summary)
     if filename != "":
-        output_file = "./output/" + filename + ".txt"
+        output_file = "./data/output/" + filename + ".txt"
         with open(output_file, "w") as file:
             output = f"Image enhancement: {image_enhancement}\n"
             output += f"Detection: {model_name}\n"

@@ -21,7 +21,8 @@ training/models/ssd_mobnet/ckpt-*
 training/tensorflowapi/
 
 # YOLOv5
-training/yolov5/
+training/yolov5/*
+!training/yolov5/dataset.yaml
 *.pt
 
 # Byte-compiled / optimized / DLL files

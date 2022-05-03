@@ -62,15 +62,26 @@ def main():
     preparer = Prepare(train_test_distribution, datasets, classes)
     
     output_path = "../yolov5/dataset/"
-
+    
     for entry in preparer.get_all_train_entries():
         output_annotations = output_path + "labels/train/"
         output_images = output_path + "images/train/"
-        
+
+        if not os.path.exists(output_annotations):
+            os.makedirs(output_annotations)
+        if not os.path.exists(output_images):
+            os.makedirs(output_images)
+
         create_txt_file(entry, output_annotations, output_images)
+    
     for entry in preparer.get_all_test_entries():
         output_annotations = output_path + "labels/val/"
         output_images = output_path + "images/val/"
+
+        if not os.path.exists(output_annotations):
+            os.makedirs(output_annotations)
+        if not os.path.exists(output_images):
+            os.makedirs(output_images)
 
         create_txt_file(entry, output_annotations, output_images)
     

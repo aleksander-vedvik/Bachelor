@@ -73,7 +73,7 @@ The different models used are:
 
 ## YOLOv5:
 
-    python ./yolov5/train.py --img 1920 --batch 4 --epoch 30 --data ./dataset.yaml --cfg ./yolov5/models/yolov5x.yaml --weights ./yolov5x.pt --name ./yolov5x_vehicles --cache
+    python ./yolov5/train.py --img 640 --batch 4 --epoch 30 --data ./dataset.yaml --cfg ./yolov5/models/yolov5x.yaml --weights ./yolov5x.pt --name ./yolov5x_trained
 
 
 # Eval
@@ -105,7 +105,7 @@ Run this command from ROOT to test the models:
 
 Description of flags:
 - -m: Specify which object detection model to use. 
-  - **Options**: yolov5, ssd_mobnet, efficientdet, faster_rcnn
+  - **Options**: yolov5, yolov5_trained, ssd_mobnet, efficientdet, faster_rcnn
   - **Default**: yolov5
 - -c: Specify the checkpoint to use. Only relevant for the models from TensorFlowAPI.
 - -r: Resize the input frame. 

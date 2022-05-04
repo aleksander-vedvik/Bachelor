@@ -57,11 +57,14 @@ def main():
         datasets.append({"dataset": dataset_name, "images": image_dir1, "annotations": anno_path1})
 
     train_test_distribution = 0.9
-    classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
+    #classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
+    classes = {"car": "2", "truck": "5", "bus": "1", "bike": "0", "person": "4", "motorbike": "3"}
     
     preparer = Prepare(train_test_distribution, datasets, classes)
     
     output_path = "../yolov5/dataset/"
+    if not os.path.exists(output_path):
+            os.makedirs(output_path)
     
     for entry in preparer.get_all_train_entries():
         output_annotations = output_path + "labels/train/"

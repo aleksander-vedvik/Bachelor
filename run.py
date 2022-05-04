@@ -83,7 +83,7 @@ def main():
     }
     
     image_enhancement_methods = ["gray_linear", "gray_nonlinear", "he", "retinex_ssr", "retinex_msr", "mask"]
-    models = ["ssd_mobnet", "faster_rcnn", "yolov5", "efficientdet"]
+    models = ["ssd_mobnet", "faster_rcnn", "yolov5", "yolov5_trained", "efficientdet"]
     classes = {"car": "1", "truck": "2", "bus": "3", "bike": "4", "person": "5", "motorbike": "6"}
     
     model_name = "yolov5"

@@ -45,8 +45,10 @@ class Detection_Model:
 
     def init_model(self):
         if self.model_type == "yolov5":
-            #model = torch.hub.load('ultralytics/yolov5', 'custom', path='C:/Users/Aleks/Documents/Bachelor/Models/YOLO/yolov5/runs/train/yolov5x_vehicles2/weights/best.pt')
             model = torch.hub.load('ultralytics/yolov5', 'yolov5x')#, force_reload=True)
+            self.model = model
+        elif self.model_type == "yolov5_trained":
+            model = torch.hub.load('ultralytics/yolov5', 'custom', path='training/yolov5/yolov5/runs/train/yolov5x_trained/weights/best.pt')
             self.model = model
         else:
             gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -63,7 +65,7 @@ class Detection_Model:
     def detect(self, frame, w=0, h=0):
         return_object = {"frame": frame, "boxes": [], "scores": [], "object_classes": []}
         
-        if self.model_type == "yolov5":
+        if self.model_type == "yolov5" or self.model_type == "yolov5_trained":
             results = self.model(frame)
             df = results.pandas().xyxy[0]
             for row in df.itertuples():

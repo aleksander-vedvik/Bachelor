@@ -1,6 +1,6 @@
 # Dataset folder
-data/
 data/*
+!data/README.md
 
 # Trained models
 training/models/efficientdet/train

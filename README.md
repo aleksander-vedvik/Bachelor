@@ -32,7 +32,7 @@ Install dependencies:
 
 
 ## YOLOv5:
-Follow the installation steps provided [here](https://github.com/ultralytics/yolov5) by Ultralytics. Clone the repository into the "./training/yolov5/" folder.
+Follow the installation steps provided [here](https://github.com/ultralytics/yolov5) by Ultralytics. Clone the repository into the "./training/yolov5/" folder. (Keep the `dataset.yaml` file. It is used when training the yolov5 model)
    
 
 # Prepare the data

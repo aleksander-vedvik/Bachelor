@@ -101,22 +101,31 @@ You can use Tensorboard to get info regarding the fine-tuned models. Navigate to
 
 Run this command from ROOT to test the models:
 
-    python run.py -m *model* -c *checkpoint* -r *scale_factor* -t *tracking_model* -i *image_enhancement_method* -f *save_to_file* -s *number* -p *model*
+    python run.py -m *model* -c *checkpoint* -r *number* -t *tracking_model* -i *image_enhancement_method* -f *filename* -s *number* -p *bool*
 
-Description of flags:
+**Description of flags**:
 - -m: Specify which object detection model to use. 
   - **Options**: yolov5, yolov5_trained, ssd_mobnet, efficientdet, faster_rcnn
   - **Default**: yolov5
 - -c: Specify the checkpoint to use. Only relevant for the models from TensorFlowAPI.
-- -r: Resize the input frame. 
+- -r: Resize the input frame. Specify a number that should be used as the scale factor.
+- -t: Specify which tracking model to use.
+  - **Options**: DeepSort, simple
+  - **Default**: DeepSort
+- -i: Specify which image enhancement method to use:
+  - **Options**: none, gray_linear, gray_nonlinear, he, retinex_ssr, retinex_msr, mask
+  - **Default**: none
+- -f: Specify a filename to save the results to a file.
+- -s: Specify how many frames should be skipped.
+- -p: If given, a pre-trained model will be used. The model name must correspond to the folder name in the "pre-trained-models" directory. 
 
 
 # References:
 
-- https://github.com/tensorflow/models
-- https://github.com/nicknochnack/TFODCourse
-- https://github.com/aravindskrishnan/Retinex-Image-Enhancement
-- https://github.com/theAIGuysCode/yolov4-deepsort
-- https://github.com/nwojke/deep_sort
-- https://github.com/BerntA/CVEET
-- https://www.youtube.com/watch?v=IOxxEJpXZGU&ab_channel=RedDFilm
+- [TensorFlow Model Garden](https://github.com/tensorflow/models)
+- [TFODCourse](https://github.com/nicknochnack/TFODCourse)
+- [Retinex Image Enhancement](https://github.com/aravindskrishnan/Retinex-Image-Enhancement)
+- [The AI Guy Code](https://github.com/theAIGuysCode/yolov4-deepsort)
+- [Deep SORT](https://github.com/nwojke/deep_sort)
+- [Master thesis](https://github.com/BerntA/CVEET)
+- [YouTube video used as test dataset](https://www.youtube.com/watch?v=IOxxEJpXZGU&ab_channel=RedDFilm)

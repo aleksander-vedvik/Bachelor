@@ -63,7 +63,8 @@ Prepare the training and validation dataset for YOLOv5 by running this command f
 ## TensforFlowAPI:
 Run this command from ROOT to train a model from TensorFlowAPI:
 
-    python Models/models/research/object_detection/model_main_tf2.py --model_dir=training/models/*MODEL_NAME* --pipeline_config_path=training/models/*MODEL_NAME*/pipeline.config --num_train_steps=*NUMBER_OF_STEPS*
+    cd training
+    python tensorflowapi/research/object_detection/model_main_tf2.py --model_dir=models/*MODEL_NAME* --pipeline_config_path=models/*MODEL_NAME*/pipeline.config --num_train_steps=*NUMBER_OF_STEPS*
 
 The different models used are: 
 - Model name: **ssd_mobnet**, number of steps: **10 000**
@@ -75,13 +76,13 @@ The different models used are:
     python ./yolov5/train.py --img 1920 --batch 4 --epoch 30 --data ./dataset.yaml --cfg ./yolov5/models/yolov5x.yaml --weights ./yolov5x.pt --name ./yolov5x_vehicles --cache
 
 
-
 # Eval
 
 ## TensforFlowAPI:
 Run this command from ROOT to train a model from TensorFlowAPI:
 
-    python Models/models/research/object_detection/model_main_tf2.py --model_dir=training/models/*MODEL_NAME* --pipeline_config_path=training/models/*MODEL_NAME*/pipeline.config --checkpoint_dir=training/models/*MODEL_NAME*
+    cd training
+    python tensorflowapi/research/object_detection/model_main_tf2.py --model_dir=models/*MODEL_NAME* --pipeline_config_path=models/*MODEL_NAME*/pipeline.config --checkpoint_dir=models/*MODEL_NAME*
 
 The different models used are: 
 - Model name: **ssd_mobnet**

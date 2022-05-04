@@ -4,10 +4,10 @@ import sys
 
 PATH_TO_THIS_FILE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, PATH_TO_THIS_FILE + '\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '..\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '..\\tensorflowapi\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '..\\tensorflowapi\\research\\')
-sys.path.insert(0, PATH_TO_THIS_FILE + '..\\tensorflowapi\\research\\object_detection')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\..\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\..\\tensorflowapi\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\..\\tensorflowapi\\research\\')
+sys.path.insert(0, PATH_TO_THIS_FILE + '\\..\\tensorflowapi\\research\\object_detection')
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow.compat.v1 as tf

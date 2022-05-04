@@ -16,6 +16,8 @@ training/models/ssd_mobnet/checkpoint
 training/models/ssd_mobnet/*.index
 training/models/ssd_mobnet/ckpt-*
 
+# TFRecord files
+*.record
 
 # TensorFlowAPI
 training/tensorflowapi/

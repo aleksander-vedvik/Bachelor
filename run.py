@@ -14,8 +14,8 @@ import cv2
 import numpy as np
 from tools.detection_model import Detection_Model
 from tools.tracking_model import Tracking_Model
-from tools.incident_evaluater import Evaluate_Incidents
-from tools.performance_evaluater import Evaluate_Performance
+from tools.incident_evaluator import Evaluate_Incidents
+from tools.performance_evaluator import Evaluate_Performance
 import argparse
 from tools.visualize_objects import draw_rectangle, draw_text, draw_line
 

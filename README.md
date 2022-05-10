@@ -129,9 +129,9 @@ Run this command from ROOT to test the models:
 
 - Tensorflow models:
   - [TensorFlow Model Garden](https://github.com/tensorflow/models)
-  - [TFODCourse](https://github.com/nicknochnack/TFODCourse), Nicholas Renotte
 
 - Reused source code:
+  - [TFODCourse](https://github.com/nicknochnack/TFODCourse), Nicholas Renotte
   - [Retinex Image Enhancement](https://github.com/aravindskrishnan/Retinex-Image-Enhancement), Aravind S Krishnan
   - [The AI Guy Code](https://github.com/theAIGuysCode/yolov4-deepsort), The AI Guy
   - [Deep SORT](https://github.com/nwojke/deep_sort), Nicolai Wojke

@@ -75,6 +75,10 @@ The different models used are:
 
     python ./yolov5/train.py --img 640 --batch 4 --epoch 30 --data ./dataset.yaml --cfg ./yolov5/models/yolov5x.yaml --weights ./yolov5x.pt --name ./yolov5x_trained
 
+## Trained models:
+
+Checkpoints from the trained model used in the thesis can be downloaded from [here](https://drive.google.com/drive/folders/1hNMBL2MNyz5dWZdi1BR1o1X-3yypdCkJ?usp=sharing). These checkpoints must be placed in the respective folders located under "./training/models/*MODEL_NAME*/".
+
 
 # Eval
 
@@ -88,10 +92,6 @@ The different models used are:
 - Model name: **ssd_mobnet**
 - Model name: **efficientdet**
 - Model name: **faster_rcnn**
-
-## Trained models:
-
-Checkpoints from the trained model used in the thesis can be downloaded from [here](https://drive.google.com/drive/folders/1hNMBL2MNyz5dWZdi1BR1o1X-3yypdCkJ?usp=sharing). These checkpoints must be placed in the respective folders located under "./training/models/*MODEL_NAME*/".
 
 
 # Tensorboard

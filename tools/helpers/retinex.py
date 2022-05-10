@@ -1,4 +1,15 @@
-# SOURCE: https://github.com/aravindskrishnan/Retinex-Image-Enhancement/blob/master/retinex.py
+"""
+************************************************************************************************
+The code in this file is taken in its entirety from the source below:
+
+Title: Retinex Image Enhancement
+Author: Aravind S Krishnan
+Date: 17.08.2020
+Code version: 1.0
+Availability: https://github.com/aravindskrishnan/Retinex-Image-Enhancement/blob/master/retinex.py
+
+************************************************************************************************
+"""
 
 import numpy as np
 import cv2
@@ -13,7 +24,6 @@ def multiScaleRetinex(img, variance_list):
         retinex += singleScaleRetinex(img, variance)
     retinex = retinex / len(variance_list)
     return retinex
-
    
 
 def MSR(img, variance_list):
@@ -41,7 +51,6 @@ def MSR(img, variance_list):
                                * 255
     img_retinex = np.uint8(img_retinex)        
     return img_retinex
-
 
 
 def SSR(img, variance):
@@ -75,15 +84,9 @@ if __name__ == "__main__":
     variance=300
         
     img = cv2.imread('image.jpg')
-    #img_msr=MSR(img,variance_list)
     img_ssr=SSR(img, variance)
-
     cv2.imshow('Original', img)
-    #cv2.imshow('MSR', img_msr)
     cv2.imshow('SSR', img_ssr)
-    #cv2.imwrite('SSR.jpg', img_ssr)
-    #cv2.imwrite('MSR.jpg',img_msr)
-
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()

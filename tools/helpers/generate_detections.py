@@ -1,4 +1,17 @@
-# vim: expandtab:ts=4:sw=4
+"""
+************************************************************************************************
+The code in this file is taken in its entirety from the source below:
+
+Title: Deep Sort
+File: generate_detections.py
+Author: Nicolai Wojke
+Date: 01.04.2019
+Code version: 1.0
+Availability: https://github.com/nwojke/deep_sort
+
+************************************************************************************************
+"""
+
 import os
 import errno
 import argparse
@@ -6,11 +19,6 @@ import numpy as np
 import cv2
 import tensorflow.compat.v1 as tf
 
-#tf.compat.v1.disable_eager_execution()
-
-#physical_devices = tf.config.experimental.list_physical_devices('GPU')
-#if len(physical_devices) > 0:
-#    tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 def _run_in_batches(f, data_dict, out, batch_size):
     data_len = len(out)

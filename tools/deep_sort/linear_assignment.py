@@ -1,4 +1,17 @@
-# vim: expandtab:ts=4:sw=4
+"""
+************************************************************************************************
+The code in this file is taken in its entirety from the source below:
+
+Title: Deep Sort
+File: linear_assignment.py
+Author: Nicolai Wojke
+Date: 01.04.2019
+Code version: 1.0
+Availability: https://github.com/nwojke/deep_sort
+
+************************************************************************************************
+"""
+
 from __future__ import absolute_import
 import numpy as np
 from scipy.optimize import linear_sum_assignment

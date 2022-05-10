@@ -26,16 +26,45 @@ class Tracking_Model:
     
     def init_tracker(self):
         if self.tracker_type == "DeepSort":
+            """
+            ************************************************************************************************
+            The code below until the END statement is taken from the source below:
+
+            Title: yolov4-deepsort
+            File: preprocessing.py
+            Author: The AI Guy
+            Date: 21.08.2021
+            Code version: 1.0
+            Availability: https://github.com/theAIGuysCode/yolov4-deepsort
+
+            ************************************************************************************************
+            """
             encoder = gdet.create_box_encoder(self.model_filename, batch_size=1)
             self.encoder = encoder
             metric = nn_matching.NearestNeighborDistanceMetric("cosine", self.max_cosine_distance, self.nn_budget)
             tracker = Tracker(metric)
+            """
+            END
+            """
         else:
             tracker = Simple_Tracker()
         self.tracker = tracker
     
     def track(self, model_detections):
         if self.tracker_type == "DeepSort":
+            """
+            ************************************************************************************************
+            The code below until the END statement is taken from the source below:
+
+            Title: yolov4-deepsort
+            File: preprocessing.py
+            Author: The AI Guy
+            Date: 21.08.2021
+            Code version: 1.0
+            Availability: https://github.com/theAIGuysCode/yolov4-deepsort
+
+            ************************************************************************************************
+            """
             frame, boxes, scores, object_classes = model_detections["frame"], model_detections["boxes"], model_detections["scores"], model_detections["object_classes"]
             bboxes = np.array(boxes)
             scores = np.array(scores)
@@ -52,6 +81,9 @@ class Tracking_Model:
 
             self.tracker.predict()
             self.tracker.update(detections)
+            """
+            END
+            """
         else:
             self.tracker.update(model_detections)
     

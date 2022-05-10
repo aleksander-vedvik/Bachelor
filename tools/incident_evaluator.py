@@ -1,7 +1,6 @@
 import math
 
 
-
 class Evaluate_Incidents:
     def __init__(self, classes, colors=None, driving_direction=None):
         self.classes = classes

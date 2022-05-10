@@ -4,10 +4,24 @@ import torch
 
 import numpy as np
 from object_detection.utils import label_map_util
-from object_detection.utils import visualization_utils as viz_utils
+#from object_detection.utils import visualization_utils as viz_utils
 from object_detection.builders import model_builder
 from object_detection.utils import config_util
 
+
+"""
+************************************************************************************************
+The function "detect_fn" below is taken from the source below:
+
+Title: TFODCourse
+File: 2. Training and Detection.ipynb
+Author: Nicholas Renotte
+Date: 03.04.2021
+Code version: 1.0
+Availability: https://github.com/nicknochnack/TFODCourse
+
+************************************************************************************************
+"""
 @tf.function
 def detect_fn(image, detection_model):
     image, shapes = detection_model.preprocess(image)
@@ -45,12 +59,27 @@ class Detection_Model:
 
     def init_model(self):
         if self.model_type == "yolov5":
-            model = torch.hub.load('ultralytics/yolov5', 'yolov5x')#, force_reload=True)
+            model = torch.hub.load('ultralytics/yolov5', 'yolov5x')
+            # YOLOv5 stores and use cache by default. Use the line below instead if there are any problems with cache.
+            # model = torch.hub.load('ultralytics/yolov5', 'yolov5x', force_reload=True)
             self.model = model
         elif self.model_type == "yolov5_trained":
             model = torch.hub.load('ultralytics/yolov5', 'custom', path='training/yolov5/yolov5/runs/train/yolov5x_trained/weights/best.pt')
             self.model = model
         else:
+            """
+            ************************************************************************************************
+            The code below until the END statement is taken from the source below:
+
+            Title: TFODCourse
+            File: 2. Training and Detection.ipynb
+            Author: Nicholas Renotte
+            Date: 03.04.2021
+            Code version: 1.0
+            Availability: https://github.com/nicknochnack/TFODCourse
+
+            ************************************************************************************************
+            """
             gpus = tf.config.experimental.list_physical_devices('GPU')
             for gpu in gpus:
                 tf.config.experimental.set_memory_growth(gpu, True)
@@ -61,6 +90,9 @@ class Detection_Model:
             self.ckpt = tf.compat.v2.train.Checkpoint(model=self.model)
             self.ckpt.restore(os.path.join(self.paths['CHECKPOINT_PATH'], self.ckpt_no)).expect_partial()
             self.category_index = label_map_util.create_category_index_from_labelmap(self.paths['LABELMAP'])
+            """
+            END
+            """
 
     def detect(self, frame, w=0, h=0):
         return_object = {"frame": frame, "boxes": [], "scores": [], "object_classes": []}
@@ -87,15 +119,13 @@ class Detection_Model:
 
             detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
 
-            label_id_offset = 1
-
             for i, score in enumerate(detections["detection_scores"]):
                 if float(score) >= self.CONFIDENCE_LEVEL:
                     x1 = float(detections['detection_boxes'][i][1]) * float(w)
                     x2 = float(detections['detection_boxes'][i][3]) * float(w)
                     y1 = float(detections['detection_boxes'][i][0]) * float(h)
                     y2 = float(detections['detection_boxes'][i][2]) * float(h)
-                    class_id = str(int(detections['detection_classes'][i]) + label_id_offset)
+                    class_id = str(int(detections['detection_classes'][i]) + 1)
                     obj_class = self.class_ids.get(class_id)
 
                     return_object["boxes"].append([x1, y1, (x2-x1), (y2-y1)])

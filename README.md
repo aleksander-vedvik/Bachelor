@@ -40,7 +40,7 @@ Follow the installation steps provided [here](https://github.com/ultralytics/yol
 ## Datasets
 
 1. Download the datasets from [here](https://drive.google.com/drive/folders/1hNMBL2MNyz5dWZdi1BR1o1X-3yypdCkJ?usp=sharing).
-2. Move the datasets into the folder "./data/"
+2. Move the datasets into the folder "./data/" (Folder structure is given in the README file located in the folder "./data")
 
 ## TensorFlowAPI:
 
@@ -89,6 +89,10 @@ The different models used are:
 - Model name: **efficientdet**
 - Model name: **faster_rcnn**
 
+## Trained models:
+
+Checkpoints from the trained model used in the thesis can be downloaded from [here](https://drive.google.com/drive/folders/1hNMBL2MNyz5dWZdi1BR1o1X-3yypdCkJ?usp=sharing). These checkpoints must be placed in the respective folders located under "./training/models/*MODEL_NAME*/".
+
 
 # Tensorboard
 
@@ -123,10 +127,17 @@ Run this command from ROOT to test the models:
 
 # References:
 
-- [TensorFlow Model Garden](https://github.com/tensorflow/models)
-- [TFODCourse](https://github.com/nicknochnack/TFODCourse)
-- [Retinex Image Enhancement](https://github.com/aravindskrishnan/Retinex-Image-Enhancement)
-- [The AI Guy Code](https://github.com/theAIGuysCode/yolov4-deepsort)
-- [Deep SORT](https://github.com/nwojke/deep_sort)
-- [Master thesis](https://github.com/BerntA/CVEET)
-- [YouTube video used as test dataset](https://www.youtube.com/watch?v=IOxxEJpXZGU&ab_channel=RedDFilm)
+- Tensorflow models:
+  - [TensorFlow Model Garden](https://github.com/tensorflow/models)
+  - [TFODCourse](https://github.com/nicknochnack/TFODCourse), Nicholas Renotte
+
+- Reused source code:
+  - [Retinex Image Enhancement](https://github.com/aravindskrishnan/Retinex-Image-Enhancement), Aravind S Krishnan
+  - [The AI Guy Code](https://github.com/theAIGuysCode/yolov4-deepsort), The AI Guy
+  - [Deep SORT](https://github.com/nwojke/deep_sort), Nicolai Wojke
+
+- Datasets:
+  - [Master thesis](https://github.com/BerntA/CVEET), Bernt Andreas Eide
+  - [YouTube video used as test dataset](https://www.youtube.com/watch?v=IOxxEJpXZGU&ab_channel=RedDFilm)
+
+References are also cited in the files where code has been used.

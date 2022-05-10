@@ -1,4 +1,16 @@
-# vim: expandtab:ts=4:sw=4
+"""
+************************************************************************************************
+The code in this file is taken in its entirety from the source below:
+
+Title: yolov4-deepsort
+File: preprocessing.py
+Author: The AI Guy
+Date: 21.08.2021
+Code version: 1.0
+Availability: https://github.com/theAIGuysCode/yolov4-deepsort
+
+************************************************************************************************
+"""
 import numpy as np
 import cv2
 

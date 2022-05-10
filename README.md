@@ -1,5 +1,5 @@
 # Bachelor
-I will provide a quick guide below on how to get started with this repository.
+I will provide a quick guide below on how to get started with this repository. README files are also provided in all relevant folders, which give a short description and explanation of each file in the respective folders.
 
 ROOT or . is defined as the same folder where this readme file is located.
 
@@ -118,7 +118,7 @@ Run this command from ROOT to test the models:
 - -f: Specify a filename to save the results to a file.
 - -s: Specify how many frames should be skipped.
 - -p: If given, a pre-trained model will be used. The model name must correspond to the folder name in the "pre-trained-models" directory. 
-- *It is possible to simply run `python run.py` without flags. Then pre-trained YOLOv5x, deep SORT, and no image enhancement will be applied. No files will be saved.*
+- *It is possible to simply run `python run.py` without any flags. Then pre-trained YOLOv5x, deep SORT, and no image enhancement will be applied. No files will be saved.*
 
 
 # References:

@@ -77,7 +77,7 @@ The different models used are:
 
 ## Trained models:
 
-Checkpoints from the trained model used in the thesis can be downloaded from [here](https://drive.google.com/drive/folders/1hNMBL2MNyz5dWZdi1BR1o1X-3yypdCkJ?usp=sharing). These checkpoints must be placed in the respective folders located under "./training/models/*MODEL_NAME*/".
+Checkpoints from the trained model used in the thesis can be downloaded from [here](https://drive.google.com/drive/folders/1hNMBL2MNyz5dWZdi1BR1o1X-3yypdCkJ?usp=sharing). The checkpoints are stored in the "Checkpoints" folder on the Google Drive folder. These checkpoints should have a similar folder structure to this Github. I.e. the checkpoints must be placed in the respective folders located under "./training/".
 
 
 # Eval
